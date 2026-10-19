@@ -264,6 +264,19 @@ window.__ModuleLoader__.load({ id: 'dsh-plugin-version-management', factory: fun
       }
     }, 'dsh-plugin-version-management: styles')
 
+    try {
+      ctx.slots.inject('plugins.bundle.config', function () {
+        return ctx.slots.register(
+          { name: 'plugins.bundle.config', key: 'dsh-plugin-version-management' },
+          function (props) {
+            return React.createElement(VersionPanel, { ctx: ctx })
+          }
+        )
+      })
+    } catch (e) {
+      console.warn('[dsh-plugin-version-management] bundle.config slot registration failed:', e)
+    }
+
     ctx.slots.inject('settings.section', function () {
       return ctx.slots.register(
         { name: 'settings.section', id: 'dsh-plugin-version-management', order: 65, label: '插件版本恢复' },
